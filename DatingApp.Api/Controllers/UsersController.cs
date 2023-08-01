@@ -21,7 +21,14 @@ public class UsersController : ControllerBase
     public async Task<IActionResult> GetUsers()
     {
         var users = await _ctx.Users.ToListAsync();
-        return Ok(users);
+
+        var newUsers = new List<AppUser>
+        {
+            new() {Id = 1, UserName = "Us"},
+            new() {Id = 2, UserName = "Us1"},
+            new() {Id = 3, UserName = "Us2"},
+        };
+        return Ok(newUsers);
     }
 
     [HttpGet]
