@@ -1,14 +1,14 @@
 ﻿using DatingApp.Api.Data;
 using DatingApp.Api.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SQLitePCL;
 
 namespace DatingApp.Api.Controllers;
 
-[ApiController]
-[Route("[controller]")]
-public class UsersController : ControllerBase
+[Authorize]
+public class UsersController : BaseApiController
 {
     private readonly DataContext _ctx;
     
@@ -28,14 +28,16 @@ public class UsersController : ControllerBase
             new() {Id = 2, UserName = "Us1"},
             new() {Id = 3, UserName = "Us2"},
         };
-        return Ok(newUsers);
+        return Ok(users);
     }
 
     [HttpGet]
     [Route("{id}")]
     public async Task<IActionResult> GetUserById(int id)
     {
-        var user = await _ctx.Users.FirstOrDefaultAsync(u => u.Id == id); 
+        var user = await _ctx.Users.FirstOrDefaultAsync(u => u.Id == id);
+
+        if (user is null) return NotFound("User with this id does not exist");
         return Ok(user);
     }
 }
