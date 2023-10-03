@@ -22,7 +22,7 @@ public class AccountController : BaseApiController
 
     [HttpPost]
     [Route("register")]
-    public async Task<IActionResult> Register(RegisterDTO registerDto)
+    public async Task<IActionResult> Register([FromBody]RegisterDTO registerDto)
     {
         if (await UserExists(registerDto.UserName))
         {

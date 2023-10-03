@@ -7,7 +7,7 @@ using SQLitePCL;
 
 namespace DatingApp.Api.Controllers;
 
-[Authorize]
+//[Authorize]
 public class UsersController : BaseApiController
 {
     private readonly DataContext _ctx;
